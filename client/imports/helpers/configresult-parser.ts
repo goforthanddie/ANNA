@@ -143,7 +143,7 @@ export class ConfigresultParser {
                         .attr("y", yScale(d) - 15)
                         .attr("id", "t" + d.x + "-" + d.y + "-" + i)
                         .text(function () {
-                            return d
+                            return (i+1) + ':' + d
                         })
                 })
                 .on("mouseout", function (d, i) {

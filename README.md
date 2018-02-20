@@ -1,4 +1,4 @@
-# Neural Network Data Oranizer
+# Administrative Neural Network Application
 
 ## Motivation
 

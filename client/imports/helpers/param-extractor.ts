@@ -33,15 +33,24 @@ export class ParamExtractor {
         }
         let trainingSets : TrainingSet[] = [];
         //get the amount of trainingSets by example of the first line
-        let splitToEpochs = input[0].split(',');
-        let trainingSetCount = splitToEpochs.length;
-        //get rid of empty trainingset (caused my comma at the end of a line, etc)
-        if ((splitToEpochs[trainingSetCount -1].length === 1 && splitToEpochs[trainingSetCount -1].match("[\\n\\r]+")) || splitToEpochs[trainingSetCount -1] === "") {
+        let splitToSets = input[0].split(',');
+        let trainingSetCount = splitToSets.length;
+        //get rid of empty set (caused by comma at the end of a line, etc)
+        if ((splitToSets[trainingSetCount -1].length === 1 && splitToSets[trainingSetCount -1].match("[\\n\\r]+")) || splitToSets[trainingSetCount -1] === "") {
             trainingSetCount--;
         }
+        //test if first row contains alphabetical characters, if so use as names for sets
+        let customSetNames = input[0].match('[A-Za-z]');
+
         //add empty trainingSets
         for (let j = 0; j < trainingSetCount; j++) {
-            trainingSets.push(new TrainingSet());
+            let setName = customSetNames ? splitToSets[j] : '';
+            trainingSets.push(new TrainingSet(setName));
+        }
+
+        //omit first row if it contains names for the sets
+        if (customSetNames) {
+            input.shift();
         }
 
         //add the input to the trainingSets
