@@ -1,10 +1,8 @@
 {
   "public": {
     "ldap": {
-      "url": "ldap://ifn05.ifn.ing.tu-bs.de",
-      "dn": "CN=Users,DC=ifn,DC=ing,DC=tu-bs,DC=de"
-    },
-   "key": "C:/Users/lguel/server.key",
-   "cert": "C:/Users/lguel/server.cert"
+      "url": "ldap://your.ldap.here",
+      "dn": "YOUR=dn,GOES=here"
+    }
   }
 }
