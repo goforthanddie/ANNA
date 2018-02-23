@@ -118,7 +118,7 @@ export class ConfigresultParser {
                         d = 0;
                         validResults = false;
                     }
-                    return xScale(i +1);
+                    return xScale(i + 1);
                 })
                 .attr("cy", function (d) {
                     if (isNaN(d)) {
@@ -129,33 +129,51 @@ export class ConfigresultParser {
                 })
                 .attr("r", 4)
                 .attr("fill", color)
+                .attr("clicked", 0)
                 .on("mouseover", function (d, i) {
-                    if (isNaN(d)) {
-                        d = 0;
-                        validResults = false;
+                    if (d3.select(this).attr("clicked") == 0) {
+                        if (isNaN(d)) {
+                            d = 0;
+                            validResults = false;
+                        }
+                        d3.select(this).transition()
+                            .ease(d3.easeElastic)
+                            .duration("500")
+                            .attr("r", 6);
+                        vis.append("text")
+                            .attr("x", xScale(i) - 30)
+                            .attr("y", yScale(d) - 15)
+                            .attr("id", "t" + d.toString().replace('.', 'x') + '-' + i)
+                            .text(function () {
+                                return (i + 1) + ':' + d
+                            })
                     }
-                    d3.select(this).transition()
-                        .ease(d3.easeElastic)
-                        .duration("500")
-                        .attr("r", 6);
-                    vis.append("text")
-                        .attr("x", xScale(i) - 30)
-                        .attr("y", yScale(d) - 15)
-                        .attr("id", "t" + d.x + "-" + d.y + "-" + i)
-                        .text(function () {
-                            return (i+1) + ':' + d
-                        })
+                })
+                .on("click", function (d, i) {
+                    if (d3.select(this).attr('clicked') == 1) {
+                        d3.select(this).attr('clicked', 0);
+                        d3.select(this).transition()
+                            .ease(d3.easeElastic)
+                            .duration("500")
+                            .attr("r", 4);
+                        d3.select("#t" + d.toString().replace('.', 'x') + '-' + i).remove();
+                    } else {
+                        d3.select(this).attr('clicked', 1);
+                    }
                 })
                 .on("mouseout", function (d, i) {
-                    if (isNaN(d)) {
-                        d = 0;
-                        validResults = false;
+                    if (d3.select(this).attr('clicked') == 0) {
+                        if (isNaN(d)) {
+                            d = 0;
+                            validResults = false;
+                        }
+
+                        d3.select(this).transition()
+                            .ease(d3.easeElastic)
+                            .duration("500")
+                            .attr("r", 4);
+                        d3.select("#t" + d.toString().replace('.', 'x') + '-' + i).remove();
                     }
-                    d3.select(this).transition()
-                        .ease(d3.easeElastic)
-                        .duration("500")
-                        .attr("r", 4);
-                    d3.select("#t" + d.x + "-" + d.y + "-" + i).remove();
                 })
         });
         chart.vis = vis;
