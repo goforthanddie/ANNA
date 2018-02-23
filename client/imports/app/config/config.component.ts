@@ -281,8 +281,15 @@ export class ConfigComponent implements OnInit{
             } else {
                 color = this.colors[index];
             }
-            let testSetName = (this.trainingSetNames.length - index +1) + ". Test";
-            let text = index >= this.trainingSetNames.length ? testSetName : this.trainingSetNames[index];
+
+            let text = '';
+            if (result.name.length > 0) {
+                text = result.name;
+            } else {
+                let testSetName = result.name.length > 0 ? result.name : (this.trainingSetNames.length + index - 3) + ". Test";
+                text = index >= this.trainingSetNames.length ? testSetName : this.trainingSetNames[index];
+            }
+
             this.chart.colors.push(color);
             colorList.append("div")
                 .attr("class", "row")
