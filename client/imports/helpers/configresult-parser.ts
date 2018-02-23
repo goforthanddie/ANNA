@@ -152,11 +152,6 @@ export class ConfigresultParser {
                 .on("click", function (d, i) {
                     if (d3.select(this).attr('clicked') == 1) {
                         d3.select(this).attr('clicked', 0);
-                        d3.select(this).transition()
-                            .ease(d3.easeElastic)
-                            .duration("500")
-                            .attr("r", 4);
-                        d3.select("#t" + d.toString().replace('.', 'x') + '-' + i).remove();
                     } else {
                         d3.select(this).attr('clicked', 1);
                     }
